@@ -71,7 +71,7 @@ export default function Footer() {
           <p>{footer.copyright}</p>
           <div className="socials">
             {business.socials.map((s) => (
-              <a key={s.label} href={s.href}>
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">
                 {s.label}
               </a>
             ))}

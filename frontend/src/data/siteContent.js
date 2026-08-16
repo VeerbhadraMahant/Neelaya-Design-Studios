@@ -25,9 +25,8 @@ export const business = {
   mapsSearchUrl:
     'https://www.google.com/maps/search/?api=1&query=Neelaya+Design+Studio+Chinchwad+Pimpri-Chinchwad',
   socials: [
-    { label: 'Instagram', href: '#' },
-    { label: 'Pinterest', href: '#' },
-    { label: 'LinkedIn', href: '#' },
+    { label: 'Instagram', href: 'https://www.instagram.com/neelaya_design_studio/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/neelaya-design-studio' },
   ],
 };
 
