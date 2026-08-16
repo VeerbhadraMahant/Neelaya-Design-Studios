@@ -6,8 +6,11 @@ const HOVER_SELECTOR =
 /**
  * Custom circular cursor: a small translucent dot at rest, growing into a
  * white disc with mix-blend-mode:difference on hover — which optically
- * inverts any text/UI it passes over. Desktop (fine pointer) only; see
- * global.css for the pointer:coarse fallback that hides it entirely.
+ * inverts any text/UI it passes over. Over the (dark) footer, the resting
+ * dot is swapped to white too, since the default dark dot is invisible
+ * against it; hover there still triggers the same invert effect. Desktop
+ * (fine pointer) only; see global.css for the pointer:coarse fallback that
+ * hides it entirely.
  */
 export default function CursorDot() {
   const dotRef = useRef(null);
@@ -44,11 +47,16 @@ export default function CursorDot() {
 
     const onMouseOver = (e) => {
       if (e.target.closest(HOVER_SELECTOR)) dot.classList.add('active');
+      if (e.target.closest('footer')) dot.classList.add('on-footer');
     };
     const onMouseOut = (e) => {
       const leavingHover = e.target.closest(HOVER_SELECTOR);
       const enteringHover = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(HOVER_SELECTOR);
       if (leavingHover && !enteringHover) dot.classList.remove('active');
+
+      const leavingFooter = e.target.closest('footer');
+      const enteringFooter = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('footer');
+      if (leavingFooter && !enteringFooter) dot.classList.remove('on-footer');
     };
     const onDocLeave = () => {
       dot.style.opacity = '0';

@@ -470,6 +470,10 @@ form .btn{align-self:flex-start; margin-top:4px;}
     width:42px; height:42px; background:var(--white); opacity:1;
     mix-blend-mode:difference;
   }
+  /* Footer is ink-on-ink — the default dark dot would vanish there, so swap it to
+     white while resting over the footer. Hovering a link still triggers .active
+     above (white + difference), so the invert effect is unchanged. */
+  .cursor-dot.on-footer{background:var(--white);}
 }
 @media (pointer:coarse){
   .cursor-dot{display:none;}
