@@ -257,12 +257,28 @@ header.scrolled .burger span{background:var(--ink);}
 .service-card h3{font-size:20px; margin-bottom:12px;}
 .service-card p{color:var(--steel); font-size:14px; line-height:1.5;}
 
-/* Selected Work — scroll-linked infinite marquee, sharp full-bleed images */
+/* Selected Work — sharp full-bleed images.
+   Desktop/trackpad (pointer:fine): the row pins in place while vertical
+   scroll drives it left-to-right, then releases — see usePinnedCarousel.
+   Touch (pointer:coarse): a plain native swipeable row, no pinning. */
 .work-head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:44px; flex-wrap:wrap;}
 
-.carousel-track-wrap{
-  overflow:hidden;
+.carousel-pin{position:relative;}
+@media (pointer:fine){
+  .carousel-pin-inner{position:sticky; top:0; height:100vh; display:flex; align-items:center;}
 }
+
+.carousel-track-wrap{overflow:hidden;}
+@media (pointer:coarse){
+  .carousel-track-wrap{
+    overflow-x:auto; overflow-y:hidden; scroll-behavior:smooth; scrollbar-width:none;
+    -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory;
+    padding-bottom:8px;
+  }
+  .carousel-track-wrap::-webkit-scrollbar{display:none;}
+  .c-card{scroll-snap-align:start;}
+}
+
 .carousel{
   display:flex; gap:20px;
   padding:0 40px; width:max-content;
