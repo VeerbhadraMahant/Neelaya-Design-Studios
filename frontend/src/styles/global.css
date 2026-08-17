@@ -257,16 +257,10 @@ header.scrolled .burger span{background:var(--ink);}
 .service-card h3{font-size:20px; margin-bottom:12px;}
 .service-card p{color:var(--steel); font-size:14px; line-height:1.5;}
 
-/* Selected Work — sharp full-bleed images.
-   Desktop/trackpad (pointer:fine): the row pins in place while vertical
-   scroll drives it left-to-right, then releases — see usePinnedCarousel.
-   Touch (pointer:coarse): a plain native swipeable row, no pinning. */
+/* Selected Work — scroll-linked infinite marquee, sharp full-bleed images.
+   Desktop/trackpad (pointer:fine): useScrollMarquee drives the transform.
+   Touch (pointer:coarse): plain native swipeable row, JS hook is a no-op. */
 .work-head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:44px; flex-wrap:wrap;}
-
-.carousel-pin{position:relative;}
-@media (pointer:fine){
-  .carousel-pin-inner{position:sticky; top:0; height:100vh; display:flex; align-items:center;}
-}
 
 .carousel-track-wrap{overflow:hidden;}
 @media (pointer:coarse){
@@ -277,6 +271,9 @@ header.scrolled .burger span{background:var(--ink);}
   }
   .carousel-track-wrap::-webkit-scrollbar{display:none;}
   .c-card{scroll-snap-align:start;}
+  /* Only the marquee's duplicated second half exists for the desktop loop —
+     hide it here so touch users swipe through the real 5 cards, not 10. */
+  .carousel > :nth-child(n+6){display:none;}
 }
 
 .carousel{

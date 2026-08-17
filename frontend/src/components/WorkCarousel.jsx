@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useReveal } from '../hooks/useReveal.js';
-import { usePinnedCarousel } from '../hooks/usePinnedCarousel.js';
+import { useScrollMarquee } from '../hooks/useScrollMarquee.js';
 import { portfolio } from '../data/siteContent.js';
 
 function ProjectCard({ project }) {
@@ -24,13 +24,13 @@ function ProjectCard({ project }) {
 export default function WorkCarousel() {
   const { ref: headRef, className: headClass } = useReveal('reveal');
   const { ref: ctaRef, className: ctaClass } = useReveal('reveal');
-  const pinRef = useRef(null);
   const trackRef = useRef(null);
+  const trackWrapRef = useRef(null);
 
-  // Desktop/trackpad: pins the row and maps vertical scroll to horizontal
-  // position, then releases so the page continues scrolling normally.
-  // Mobile: no-ops — the CSS below gives it a plain native swipeable row.
-  usePinnedCarousel(pinRef, trackRef);
+  useScrollMarquee(trackRef, trackWrapRef, 0.6);
+
+  // Render the set twice back-to-back so the marquee has somewhere to loop to.
+  const loopedProjects = [...portfolio.projects, ...portfolio.projects];
 
   return (
     <section id="work">
@@ -43,15 +43,11 @@ export default function WorkCarousel() {
         </div>
       </div>
 
-      <div className="carousel-pin" ref={pinRef}>
-        <div className="carousel-pin-inner">
-          <div className="carousel-track-wrap">
-            <div className="carousel" ref={trackRef}>
-              {portfolio.projects.map((project) => (
-                <ProjectCard key={project.idx} project={project} />
-              ))}
-            </div>
-          </div>
+      <div className="carousel-track-wrap" ref={trackWrapRef}>
+        <div className="carousel" ref={trackRef}>
+          {loopedProjects.map((project, i) => (
+            <ProjectCard key={`${project.idx}-${i}`} project={project} />
+          ))}
         </div>
       </div>
 
